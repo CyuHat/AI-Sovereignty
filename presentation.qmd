@@ -2,7 +2,6 @@
 title: "AI Sovereignty"
 format:
   revealjs:
-    theme: [default, cosmo]
     incremental: true
     slide-number: c/t
     show-slide-number: all
@@ -238,6 +237,42 @@ Everything in the next forty minutes clicks back to these four minutes: the dele
 Then say the transition line out loud: "So how did we get here?" Advance into Part 1.
 :::
 
+## The Three Levers of Control {.center}
+
+::: {.fragment}
+Every AI provider wants to own three things:
+:::
+
+::: {.fragment}
+**The inference** — where the model runs
+:::
+
+::: {.fragment}
+**The tool** — the interface that feeds it your data
+:::
+
+::: {.fragment}
+**The context** — your documents, your history, your defaults
+:::
+
+::: {.fragment}
+Own all three, and you are the product.
+Own none, and you are the customer.
+:::
+
+::: {.fragment}
+**
+For the first time, you can control all three without meaningful compromise.
+**
+:::
+
+::: {.notes}
+This is the structural frame of the entire talk. Providers like OpenAI, Anthropic, Google, and XAI each want to control inference (their API), tools (Claude Code, ChatGPT app, Gemini extensions), and context/data (your chat history, uploaded files, connected services). The default is that they control all three. The thesis of this talk is that each lever is now independently controllable: you can run local inference, choose open-source or sovereign tools, and keep your context under your own governance — without accepting the performance penalties that made this impossible two years ago.
+:::
+
+---
+
+
 ## Part 2 — Three Axes of Sovereignty {.center}
 
 ::: notes
@@ -433,39 +468,67 @@ worth a passing remark.
 
 ---
 
-### When Law Fails, Architecture Steps In {.center}
+### When Law Fails
 
-::: notes
-The plot twist: maybe you believe regulators will fix this. 
-Here is what trying looks like.
-:::
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": "container",
+  "height": 300,
+  "title": {
+    "text": "European GDPR Fines Against AI Providers",
+    "subtitle": "Outcome status matters more than headline amounts"
+  },
+  "data": {
+    "values": [
+      {"company": "OpenAI (Italy, Nov 2024)", "fine_m": 15, "status": "Annulled Mar 2026"},
+      {"company": "Clearview AI (Italy, 2022)", "fine_m": 20, "status": "Non-compliant"},
+      {"company": "Clearview AI (France)", "fine_m": 20, "status": "Non-compliant"},
+      {"company": "Lusha (Italy, Jul 2026)", "fine_m": 2, "status": "Paid/ordered"}
+    ]
+  },
+  "mark": {"type": "bar", "cornerRadius": 3},
+  "encoding": {
+    "x": {"field": "fine_m", "type": "quantitative", "title": "Fine (€ millions)"},
+    "y": {"field": "company", "type": "nominal", "sort": "-x", "title": null},
+    "color": {"field": "status", "type": "nominal", "title": "Status"}
+  }
+}
+```
 
-November 2024: Italy's data protection authority fines OpenAI €15 million.
-The first GDPR fine against a chatbot maker, ever.
-
-::: fragment
-March 2026: the Court of Rome **annuls** it. 
-OpenAI's Irish subsidiary makes Ireland the lead regulator 
-under GDPR's one-stop-shop rule. Italy never had jurisdiction. 
-The substance was never judged.
-:::
-
-::: fragment
-One fine. Zero rulings on the merits. The enforcement mechanism 
+::: {.fragment}
+One fine. Zero rulings on the merits. The enforcement mechanism
 itself became the escape hatch.
 :::
 
+<small>Source: Court of Rome R.G. 4785/2025; Cross-Border Data Forum</small>
+
+::: {.notes}
+The Italian €15M fine against OpenAI — the first-ever GenAI GDPR fine in the EU — was annulled on 18 March 2026 by the Court of Rome on jurisdictional grounds: OpenAI's Irish establishment made the Irish DPC the lead authority under GDPR's one-stop-shop. The substance was never judged. Meanwhile Clearview AI owes €20M in Italy and €20M in France and remains non-compliant. The sovereign lesson: regulators alone will not save you.
+:::
+
+---
+
+
+### When Law Fails, Architecture Steps In {.center}
+
+::: {.notes}
+The plot twist: maybe you believe regulators will fix this.
+Here is what trying looks like.
+:::
+
 ::: fragment
-So the serious players stopped asking courts and started 
+So the serious players stopped asking courts and started
 asking tenders.
 :::
 
-::: notes
+::: {.notes}
 Keep it brisk, it's one beat. The absurdism: the rule designed
 to make enforcement simpler across Europe ended up voiding the
-only fine Europe had landed. If someone asks about the
-Irish DPC follow-up: the point stands regardless of what Ireland
-does later, because the years-long gap is the vulnerability.
+only fine Europe had landed — as the chart on the previous slide
+showed. If someone asks about the Irish DPC follow-up: the
+point stands regardless of what Ireland does later, because the
+years-long gap is the vulnerability.
 :::
 
 ---
@@ -517,30 +580,54 @@ independently. But you rarely optimize all three separately.
 
 They correlate, roughly, like this:
 
-::: fragment
-**[Show concentric circles diagram]**
-:::
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": 420,
+  "height": 280,
+  "title": {
+    "text": "The Sovereignty Map",
+    "subtitle": "Distance × Retention × Jurisdiction"
+  },
+  "data": {
+    "values": [
+      {"ring": "Innermost: Local (your machine)", "order": 1, "color": "#2a7a2a", "desc": "Zero distance · you delete · local laws"},
+      {"ring": "Middle: Hosted open-weight (EU)", "order": 2, "color": "#e08a00", "desc": "One hop · contract · certified ownership"},
+      {"ring": "Outermost: Global platforms", "order": 3, "color": "#b33", "desc": "US/China parent · policy defaults · CLOUD Act"}
+    ]
+  },
+  "mark": {"type": "arc", "innerRadius": 50, "outerRadius": 120, "stroke": "#fff", "strokeWidth": 3},
+  "encoding": {
+    "theta": {"field": "order", "type": "quantitative", "stack": "normalize", "sort": "descending"},
+    "color": {"field": "color", "type": "nominal", "scale": null, "legend": null},
+    "tooltip": [
+      {"field": "ring", "type": "nominal", "title": "Ring"},
+      {"field": "desc", "type": "nominal", "title": "Protection level"}
+    ]
+  }
+}
+```
 
-::: fragment
-**Innermost: local.** Your machine. Distance zero. 
-Retention is your choice, because you delete it. 
-Jurisdiction is wherever you already are. 
+::: {.fragment}
+**Innermost: local.** Your machine. Distance zero.
+Retention is your choice, because you delete it.
+Jurisdiction is wherever you already are.
 The only axis left is the model itself.
 :::
 
-::: fragment
-**Middle ring: hosted open-weight.** A European operator you vetted. 
-One hop of distance, contractual retention, certifications 
+::: {.fragment}
+**Middle ring: hosted open-weight.** A European operator you vetted.
+One hop of distance, contractual retention, certifications
 binding ownership.
 :::
 
-::: fragment
-**Outermost ring: global inference platforms.** 
-US, Chinese, or mixed-jurisdiction platforms, or EU fronts 
+::: {.fragment}
+**Outermost ring: global inference platforms.**
+US, Chinese, or mixed-jurisdiction platforms, or EU fronts
 routing back to them. Physical location may even look European.
-The distinguishing marks: an American or Chinese parent 
-reachable by its home law, an EU promise with no ownership 
-constraint behind it, retention terms written by the party 
+The distinguishing marks: an American or Chinese parent
+reachable by its home law, an EU promise with no ownership
+constraint behind it, retention terms written by the party
 that benefits from the data. It can be fine. It cannot be assumed.
 :::
 
@@ -589,13 +676,16 @@ Timing: land the laugh, one beat, then Part 3.
 
 Three years ago I taught local-model workshops. People sat down eager.
 
-At the end, they looked at the tiny slow model, 
-then at GPT, then at me, 
-like I'd sold them a horse cart 
+At the end, they looked at the tiny, slow model,
+then at GPT, then at me,
+like I'd sold them a horse cart
 at a Formula 1 race.
 
 ::: fragment
-The race has since flattened. 
+**Today, the horse cart is lapping the field at 90% of the lap time.**
+:::
+
+::: fragment
 Which brings us to why the map matters now.
 :::
 
@@ -704,6 +794,47 @@ This kills the "horse cart at a Formula 1 race" joke from the past — because n
 :::
 
 ---
+
+## The Escalator, Visualized
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": "container",
+  "height": 320,
+  "title": {
+    "text": "Rock-bottom today = frontier 7 months ago",
+    "subtitle": "The intelligence floor is rising faster than the ceiling"
+  },
+  "data": {
+    "values": [
+      {"date": "2023-05", "floor": 35, "ceiling": 55},
+      {"date": "2023-11", "floor": 42, "ceiling": 60},
+      {"date": "2024-05", "floor": 48, "ceiling": 64},
+      {"date": "2024-11", "floor": 53, "ceiling": 67},
+      {"date": "2025-05", "floor": 57, "ceiling": 70},
+      {"date": "2025-11", "floor": 60, "ceiling": 72},
+      {"date": "2026-05", "floor": 63, "ceiling": 74},
+      {"date": "2026-09", "floor": 65, "ceiling": 75}
+    ]
+  },
+  "mark": "line",
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "title": "Date"},
+    "y": {"field": "floor", "type": "quantitative", "title": "Intelligence Index"},
+    "color": {"datum": "Floor (best open)", "type": "nominal"}
+  }
+}
+```
+
+<small>OpenTeams calibration: a 1-point gap is unnoticeable; 5 points is substantial.</small>
+
+::: {.notes}
+The escalator effect: because the floor rises so fast, choosing a local or self-hosted model today means choosing last year's frontier. And that is still good enough for 85–90% of use cases.
+:::
+
+---
+
 
 ## Benchmark Reality Check
 
@@ -1264,6 +1395,8 @@ The genuinely well-built part: cortecs positions itself as your primary Data Pro
 The unresolved part: the model pool includes GPT, Claude, Gemini, Qwen and DeepSeek, "hosted in Europe" with zero data retention. So prompts do not travel to the US or China, but the weights, the training lineage, and the behavior are foreign. Whether that matters depends on your sovereignty wish: it fully satisfies residency and GDPR processing wishes, it partially satisfies technology autonomy, and it leaves the "whose AI values am I consuming" question untouched. Community reception illustrates the ambiguity: Carlo Zottmann's blog celebrated running DeepSeek V4 Flash through cortecs with ZDR as "fully GDPR compliant", which is legally defensible and rhetorically revealing, https://zottmann.org/2026/05/20/the-european-llm-routers-are.html . Comparison with rivals: Requesty (Frankfurt, best sub-processor transparency), Opper (700+ models but AWS-hosted), https://opper.ai/blog/best-european-ai-gateways
 
 Teaching line: "a European envelope with a Chinese or American brain is a legitimate choice, if you know that is what you bought. The scam is only when you do not."
+
+Footnote: do not confuse cortecs.ai (the Vienna-based LLM router) with CoRTecS (cortecs.unistra.fr), which is a University of Strasbourg scientific services portal. They are unrelated.
 :::
 
 ## Case Study 2: S3NS and Bleu, the Contractual Sovereigns
@@ -1342,8 +1475,6 @@ The Microsoft half of the slide, if time allows or for Q&A: Microsoft's EU Data 
 
 ## Case Study 4: Nebius, the Surprise Booking
 
-*(slot reserved: the legal surprise)*
-
 ::: {.fragment}
 A company that looked European.
 
@@ -1351,12 +1482,46 @@ Then you read the rules, and the jurisdiction moved.
 :::
 
 ::: {.notes}
-Timing: 1 minute 30 seconds (reserved). PLACEHOLDER SLIDE, to be completed after the user's in-depth search on Nebius. Known outline from the user: a European-seeming enterprise whose rules and jurisdiction now place it under US law. Before a recent terms update, it was possible to pin specific models to European servers; after a privacy-policy change (which did not clearly announce the loss of server-location control), users can no longer choose where the model runs, meaning workloads could silently move from a European server to a US one.
+Timing: 1 minute 30 seconds. Completed: while the world was arguing about who solved Navier–Stokes, Nebius quietly deleted the clause that guaranteed your data stayed where you put it. Known outline from the user: a European-seeming enterprise whose rules and jurisdiction now place it under US law. Before a recent terms update, it was possible to pin specific models to European servers; after a privacy-policy change (which did not clearly announce the loss of server-location control), users can no longer choose where the model runs, meaning workloads could silently move from a European server to a US one.
 
 Research leads already gathered for the deep dive: Nebius is Amsterdam-headquartered, Nasdaq-listed (NBIS), an ex-Yandex spinout, with a multi-jurisdiction corporate structure (Finland, Israel, the US), over 750 MW of EMEA GPU capacity including a 310 MW AI factory in Lappeenranta, Finland, NVIDIA as a 2 billion dollar investor, Gold tier in ClusterMAX 2.1 (April 2026) as the only EU-headquartered provider at that level. Existing analyst warning (Spheron, quoted in the project panorama): teams with strict CLOUD Act requirements should review the corporate structure rather than assume equivalence with OVHcloud. The "surprise" angle the user is developing presumably connects the Nasdaq listing and US presence to effective US jurisdiction, and the loss of server pinning to silent data movement. Left intentionally skeletal, pending the user's sources.
 
 Narrative function: this is the fourth and sharpest wash pattern, a company that is European by headquarters and memory but no longer by jurisdiction, and one that recently removed the customer's ability to verify residency at all. It closes the case-study sequence: decorated (S3NS), honest but partial (cortecs), refused loophole (AWS), and silent migration (Nebius).
 :::
+
+---
+
+## The Sleeper Agent Risk
+
+::: {.fragment}
+Even if the data stays in Europe, the model itself might have been trained
+with a hidden trigger that activates only under specific conditions.
+:::
+
+::: {.fragment}
+Research from the Institute on Global Affairs (2026) documents "sleeper agents":
+models trained to execute malicious behavior only under specific triggers,
+undetectable during standard safety training.
+:::
+
+::: {.fragment}
+A model hosted in Frankfurt whose weights were trained in Beijing or San Francisco
+carries the alignment values of its origin — censorship patterns, refusal triggers,
+geopolitical bias — even when the inference is local.
+:::
+
+::: {.fragment}
+**Sovereignty is not just about where the bytes stop. It is about whose values the weights encode.**
+:::
+
+<small>Sources: Hubinger et al., "Sleeper Agents" (2024); Institute on Global Affairs; PNAS Nexus / Pan & Xu</small>
+
+::: {.notes}
+This is the model-origin dimension that residency-based sovereignty washing ignores entirely. cortecs.ai routes through Europe but serves GPT, Claude, Gemini, Qwen and DeepSeek. The data never leaves the EU, but the model's behavior was shaped by its training jurisdiction. The Sleeper Agent research (Hubinger et al., 2024) showed backdoors persisting through safety training. Geopolitical alignment research (Pan & Xu, PNAS Nexus; CEAIS; LatticeFlow) documents systematic framing differences in Chinese-models vs Western-models on political queries. The point: data residency is necessary but not sufficient. You must also ask whose culture, whose law, and whose safety filters are baked into the weights themselves.
+:::
+
+---
+
 
 ## Your Monday Morning Checklist
 
@@ -1471,7 +1636,9 @@ Map to Part 4's taxonomy: Nebius is not pattern one (residency sold as sovereign
 
 ## The Sentence That Disappeared, Again
 
-September 15, 2026. Nebius publishes an updated privacy policy.
+September 8, 2026: the world argues about who solved Navier–Stokes.
+
+September 15, 2026: Nebius publishes an updated privacy policy.
 
 ~~For ensuring stable service provisioning with low latency and high
 availability of our service with fault tolerance, meaning that we store
@@ -1652,7 +1819,7 @@ Key spoken line: six is not the count. It is a selection.
 
 ## The Legal Punchline
 
-No lawsuits have been filed.
+**No lawsuits have been filed.**
 
 ::: {.fragment}
 Criminal prosecution is harder: the Computer Fraud and Abuse Act
@@ -1789,6 +1956,49 @@ labeled with a layer, with a "theater" mask torn at the outer edge contrasted
 with a solid brick inner wall. Echoes the concentric circles map from Part 2
 deliberately.
 :::
+
+---
+
+## The Trust Boundary: Theater vs Physics
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "width": "container",
+  "height": 280,
+  "title": {
+    "text": "Shrinking the Trust Boundary",
+    "subtitle": "From cloud provider down to physics"
+  },
+  "data": {
+    "values": [
+      {"layer": "Cloud Provider", "trust": 100, "kind": "Theater"},
+      {"layer": "Docker Container", "trust": 80, "kind": "Theater"},
+      {"layer": "MicroVM (Firecracker)", "trust": 50, "kind": "Physics"},
+      {"layer": "CPU TEE (SEV-SNP/TDX)", "trust": 25, "kind": "Physics"},
+      {"layer": "GPU TEE (H100 CC)", "trust": 5, "kind": "Physics"}
+    ]
+  },
+  "mark": {"type": "bar", "cornerRadius": 3},
+  "encoding": {
+    "y": {"field": "layer", "type": "nominal", "sort": ["Cloud Provider", "Docker Container", "MicroVM (Firecracker)", "CPU TEE (SEV-SNP/TDX)", "GPU TEE (H100 CC)"], "title": null},
+    "x": {"field": "trust", "type": "quantitative", "title": "Trust required (%)"},
+    "color": {"field": "kind", "type": "nominal", "title": "Boundary type"}
+  }
+}
+```
+
+::: {.fragment}
+**Theater** = you hope the operator keeps their promise.
+**Physics** = the hardware makes the promise impossible to break.
+:::
+
+::: {.notes}
+Docker is theater: the container namespace is a software convention, not a physical wall. The April 2026 CVE-2026-34040 let any HTTP request bypass Docker authorization and create a privileged container. MicroVMs are physics: Firecracker uses KVM hardware virtualization, a distinct boundary from the host kernel. CPU TEEs (AMD SEV-SNP, Intel TDX) encrypt VM memory with keys the hypervisor cannot extract. GPU TEEs (NVIDIA H100 Confidential Computing) extend that to the GPU itself, encrypting the PCIe bus and VRAM paths. The progression is from trusting people, to trusting software, to trusting hardware physics.
+:::
+
+---
+
 
 ## The Clause Stayed Deleted
 
@@ -1956,32 +2166,75 @@ Close this section with neutrality. The goal isn't to pick sides between open an
 
 ---
 
-## Optional Follow-Up Slide (If Time Permits)
-
-### "So What Should I Actually Do Tomorrow?"
+## What to Do Tomorrow {.center}
 
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Non-technical users:**
-Pick a European provider with SecNumCloud, zero retention guarantees, and ask them where the inference happens. Put the answer in writing.
+### Non-technical
 
-**Technical users:**
-Self-host OpenHands or Cline in a microVM. Move secrets to a vault. Remove `.env` files from disk. Add a human approval gate to every shell command.
+1. **Turn off training toggles.** Every chatbot you use. Ten minutes.
+2. **Choose a provider with SecNumCloud or SEAL-3.** If they cannot name the certificate, the word "sovereign" is decoration.
+3. **Ask: "Who owns the parent?"** Check the company register, not the homepage. Put the answer in writing.
 
 :::
 ::: {.column width="50%"}
 
-**Everyone:**
-Assume the agent will try to exfiltrate something tonight.
-Design the containment before you enable it.
+### Technical
+
+1. **Self-host with Ollama or vLLM.** One evening, one laptop.
+2. **Use microVMs (Firecracker).** Not Docker. Hardware boundary, not convention.
+3. **Remove `.env` files from disk.** A vault with references, never raw secrets in the agent's path.
 
 :::
+:::
+
+::: {.fragment}
+**Everyone:** assume the agent will try to exfiltrate something tonight. Design the containment before you enable it.
 :::
 
 ::: {.notes}
-This is the actionable takeaway that turns anxiety into agency. For non-technical people, "SecNumCloud" is the marker of a qualified provider. For technical people, "microVM, vault, approval gate" is a three-item checklist. Everyone else walks out with one mindset shift: assume exfiltration will happen, contain it before enabling.
+This is the split-audience takeaway the talk needed. For non-technical people: three yes/no questions anyone can ask their vendor. For technical people: three infrastructure changes that remove the most common leakage paths. The unifying principle: defaults are surveillance. Deliberate choices are sovereignty.
 :::
+
+---
+
+## The Three Levers, Revisited {.center}
+
+::: {.notes}
+At the beginning of the talk I said every provider wants to own three things: inference, tool, and context. Now that we have walked through all six parts, here is how you actually control each lever today — with concrete tool combinations.
+:::
+
+::: {.fragment}
+**Inference you own:** Ollama, vLLM, llama.cpp, SGLang, Open WebUI.
+:::
+
+::: {.fragment}
+**Tools you own:** OpenHands (Docker → Firecracker), Cline (with approval gates), Continue (local-only mode), custom MCP servers on your own hardware.
+:::
+
+::: {.fragment}
+**Context you own:** Local filesystem + vector DB (Chroma, LanceDB), end-to-end encrypted sync (E2EE), self-hosted RAG (Open WebUI + local embeddings), vault-based secrets (HashiCorp Vault, 1Password CLI, Bitwarden secrets).
+:::
+
+::: {.fragment}
+**Example stack:** Ollama (inference) + OpenHands in Firecracker (tool) + Chroma + E2EE sync (context).
+:::
+
+::: {.fragment}
+**Example stack:** Scaleway GPU (inference) + Cline with approval gates (tool) + 1Password CLI references, no `.env` on disk (context).
+:::
+
+::: {.fragment}
+**Example stack:** cortecs router (inference) + standard IDE (tool) + Requesty zero-retention sub-processor (context) — for the case where you need GDPR-clean compliance but not full technical autonomy.
+:::
+
+::: {.notes}
+These three example stacks map to the three rings of the sovereignty map: local (full autonomy), hosted open-weight (partial autonomy, contractual protection), and router/gateway (legal protection only). The key message: choose the stack that matches your actual sovereignty wish, rather than buying the most expensive one out of fear.
+:::
+
+---
+
 
 # Part 6: Take Back the Default {.center}
 
