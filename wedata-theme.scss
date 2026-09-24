@@ -1,0 +1,354 @@
+/*-- scss:defaults --*/
+
+// --------------------------------------------------
+// WeData Color Palette
+// --------------------------------------------------
+$wedata-gold:     #F5A955;
+$wedata-coral:    #EB5E65;
+$wedata-charcoal: #3C444D;
+$wedata-light:    #E6E6E6;
+$wedata-white:    #FFFFFF;
+
+// --------------------------------------------------
+// RevealJS Theme Overrides
+// --------------------------------------------------
+// Background
+$backgroundColor: $wedata-white;
+
+// Typography
+$mainFont: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$mainFontSize: 32px;
+$mainColor: $wedata-charcoal;
+
+// Headings
+$headingFont: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$headingColor: $wedata-charcoal;
+$headingTextShadow: none;
+$headingTextTransform: none;
+$headingLetterSpacing: -0.025em;
+$headingLineHeight: 1.2;
+$headingFontWeight: 700;
+
+$h1FontSize: 2.4em;
+$h2FontSize: 1.6em;
+$h3FontSize: 1.3em;
+
+// Links & Accents
+$linkColor: $wedata-gold;
+$linkColorHover: darken($wedata-gold, 12%);
+$selectionBackgroundColor: $wedata-gold;
+$selectionColor: $wedata-white;
+
+// Code blocks
+$codeFont: 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+$codeFontSize: 0.75em;
+
+// Misc
+$blockMargin: 18px;
+
+/*-- scss:rules --*/
+
+// --------------------------------------------------
+// Base typography refinements
+// --------------------------------------------------
+.reveal {
+  font-weight: 400;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.reveal h1 {
+  font-size: $h1FontSize;
+}
+
+.reveal h2 {
+  font-size: $h2FontSize;
+  font-weight: 600;
+}
+
+.reveal h3 {
+  font-size: $h3FontSize;
+  font-weight: 600;
+}
+
+.reveal p {
+  line-height: 1.45;
+  margin-bottom: 0.6em;
+}
+
+.reveal small, .reveal .small {
+  font-size: 0.7em;
+  color: lighten($wedata-charcoal, 25%);
+  display: inline-block;
+  margin-top: 0.5em;
+}
+
+// --------------------------------------------------
+// Lists
+// --------------------------------------------------
+.reveal ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.reveal ul li {
+  position: relative;
+  padding-left: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.reveal ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  background-color: $wedata-gold;
+  border-radius: 50%;
+}
+
+.reveal ol li {
+  margin-bottom: 0.5em;
+}
+
+// --------------------------------------------------
+// Fragments & incremental reveals
+// --------------------------------------------------
+.reveal .fragment {
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.reveal .fragment.visible {
+  opacity: 1;
+}
+
+// --------------------------------------------------
+// Callouts / Highlight boxes
+// --------------------------------------------------
+.reveal .highlight-box {
+  background-color: rgba($wedata-gold, 0.08);
+  border-left: 4px solid $wedata-gold;
+  padding: 0.8em 1.2em;
+  border-radius: 0 6px 6px 0;
+  margin: 1em 0;
+}
+
+.reveal .alert-box {
+  background-color: rgba($wedata-coral, 0.08);
+  border-left: 4px solid $wedata-coral;
+  padding: 0.8em 1.2em;
+  border-radius: 0 6px 6px 0;
+  margin: 1em 0;
+}
+
+// --------------------------------------------------
+// Dark slide variant
+// --------------------------------------------------
+.reveal section.dark-slide,
+.reveal section[data-background-color="#3C444D"],
+.reveal section[data-background-color="black"] {
+  h1, h2, h3, h4, p, li {
+    color: $wedata-light !important;
+  }
+  small, .small {
+    color: darken($wedata-light, 20%) !important;
+  }
+  a {
+    color: $wedata-gold !important;
+  }
+  ul li::before {
+    background-color: $wedata-gold;
+  }
+}
+
+// --------------------------------------------------
+// Part divider slides
+// --------------------------------------------------
+.reveal section.part-divider {
+  text-align: center;
+}
+
+.reveal section.part-divider h1 {
+  font-size: 2.8em;
+  font-weight: 800;
+  color: $wedata-charcoal;
+  margin-bottom: 0.2em;
+}
+
+.reveal section.part-divider h2 {
+  font-size: 1.3em;
+  font-weight: 400;
+  color: lighten($wedata-charcoal, 15%);
+  margin-top: 0;
+}
+
+.reveal section.part-divider.dark {
+  h1, h2 {
+    color: $wedata-light;
+  }
+}
+
+// --------------------------------------------------
+// Title slide specific
+// --------------------------------------------------
+.reveal .title-slide {
+  text-align: center;
+}
+
+.reveal .title-slide h1 {
+  font-size: 3.2em;
+  font-weight: 800;
+  margin-bottom: 0.15em;
+  letter-spacing: -0.03em;
+}
+
+.reveal .title-slide .subtitle {
+  font-size: 1.3em;
+  font-weight: 400;
+  color: lighten($wedata-charcoal, 15%);
+  margin-top: 0.5em;
+}
+
+.reveal .title-slide .quarto-title-authors {
+  margin-top: 1.5em;
+  font-size: 0.9em;
+  color: lighten($wedata-charcoal, 30%);
+}
+
+// --------------------------------------------------
+// Code blocks
+// --------------------------------------------------
+.reveal pre {
+  background-color: lighten($wedata-light, 5%);
+  border-radius: 6px;
+  padding: 0.6em 0.8em;
+  box-shadow: inset 0 0 0 1px rgba($wedata-charcoal, 0.08);
+}
+
+.reveal pre code {
+  background: transparent;
+  color: $wedata-charcoal;
+  font-size: 0.8em;
+  line-height: 1.5;
+}
+
+.reveal code {
+  font-family: $codeFont;
+  background-color: lighten($wedata-light, 5%);
+  color: $wedata-coral;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+// --------------------------------------------------
+// Tables
+// --------------------------------------------------
+.reveal table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.75em;
+  margin: 1em 0;
+}
+
+.reveal table th {
+  background-color: $wedata-charcoal;
+  color: $wedata-light;
+  font-weight: 600;
+  padding: 0.5em 0.8em;
+  text-align: left;
+}
+
+.reveal table td {
+  padding: 0.45em 0.8em;
+  border-bottom: 1px solid lighten($wedata-light, 2%);
+}
+
+.reveal table tr:nth-child(even) {
+  background-color: lighten($wedata-light, 8%);
+}
+
+// --------------------------------------------------
+// Progress bar & controls
+// --------------------------------------------------
+.reveal .progress {
+  background: rgba($wedata-charcoal, 0.08);
+  height: 3px;
+}
+
+.reveal .progress span {
+  background: $wedata-gold;
+}
+
+.reveal .controls {
+  color: $wedata-gold;
+}
+
+// --------------------------------------------------
+// Slide number styling
+// --------------------------------------------------
+.reveal .slide-number {
+  font-family: $mainFont;
+  font-size: 14px;
+  font-weight: 600;
+  color: lighten($wedata-charcoal, 35%);
+  background: transparent;
+}
+
+.reveal .slide-number a {
+  color: inherit;
+}
+
+// --------------------------------------------------
+// Blockquote
+// --------------------------------------------------
+.reveal blockquote {
+  background: rgba($wedata-gold, 0.06);
+  border-left: 4px solid $wedata-gold;
+  padding: 0.6em 1em;
+  font-style: italic;
+  box-shadow: none;
+  margin: 1em 0;
+}
+
+.reveal blockquote p {
+  margin: 0;
+}
+
+// --------------------------------------------------
+// Columns
+// --------------------------------------------------
+.reveal .columns {
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+}
+
+.reveal .column {
+  flex: 1;
+}
+
+// --------------------------------------------------
+// Vega-lite / figure sizing
+// --------------------------------------------------
+.reveal figure {
+  margin: 1em 0;
+}
+
+.reveal .vega-embed {
+  max-width: 100%;
+}
+
+// --------------------------------------------------
+// Print / PDF tweaks
+// --------------------------------------------------
+@media print {
+  .reveal .slides::after {
+    display: none;
+  }
+}
